@@ -1,0 +1,13 @@
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Containerfile
+    volumes:
+      - .:/app:z
+      - bundle:/usr/local/bundle
+    working_dir: /app
+    command: bash -lc "bundle install && bundle exec rake"
+
+volumes:
+  bundle:
