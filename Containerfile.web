@@ -1,0 +1,14 @@
+FROM docker.io/library/ruby:3.4
+
+WORKDIR /app
+
+COPY . /app
+
+RUN gem install bundler \
+    && bundle install
+
+EXPOSE 5678
+
+# Serve the Resque dashboard in the foreground on all interfaces. The final arg
+# is the config file where Resque.redis is pointed at the compose `redis` service.
+CMD ["bin/resque-web", "-F", "-o", "0.0.0.0", "-p", "5678", "/app/docker/resque-web-config.rb"]
