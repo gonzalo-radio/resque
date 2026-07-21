@@ -35,9 +35,11 @@
       <th>Jobs</th>
     </tr>
     <% resque.queues.sort_by { |q| q.to_s }.each do |queue| %>
+    <% size = resque.size queue %>
+    <% next if size.zero? %>
     <tr>
       <td class='queue'><a class="queue" href="<%= u "queues/#{queue}" %>"><%= queue %></a></td>
-      <td class='size'><%= resque.size queue %></td>
+      <td class='size'><%= size %></td>
     </tr>
     <% end %>
     <% if failed_multiple_queues? %>
